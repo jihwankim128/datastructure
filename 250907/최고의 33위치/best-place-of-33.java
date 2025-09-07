@@ -13,18 +13,23 @@ public class Main {
         int width = n - 3;
         int maxCount = 0;
         for (int i = 0; i <= width; i++) {
-            int limit = i + 3;
-            int count = 0;
-            for (int j = i; j < limit; j++) {
-                for (int k = i; k < limit; k++) {
-                    if (grid[j][k] == 1) {
-                        count++;
-                    }
-                }
+            for (int j = 0; j <= width; j++) {
+                maxCount = Math.max(maxCount, countCoin(i, j, grid));
             }
-            maxCount = Math.max(count, maxCount);
         }
 
         System.out.println(maxCount);
+    }
+
+    static int countCoin(int x, int y, int[][] grid) {
+        int count = 0;
+        for (int i = x; i < x + 3; i++) {
+            for (int j = y; j < y + 3; j++) {
+                if (grid[i][j] == 1) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
