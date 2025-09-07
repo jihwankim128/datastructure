@@ -45,7 +45,7 @@ public class Main {
         for (int i = 0; i < blocks[idx].length; i++) {
             int nx = x + blocks[idx][i][0];
             int ny = y + blocks[idx][i][1];
-            if (nx < 0 || nx >= grid.length || ny < 0 || ny >= grid.length) {
+            if (nx < 0 || nx >= grid.length || ny < 0 || ny >= grid[0].length) {
                 return 0;
             }
             count += grid[nx][ny];
