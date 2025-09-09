@@ -1,86 +1,65 @@
 import java.util.Scanner;
-
 public class Main {
+
     static int[][] grid = new int[21][21];
     static int n;
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
-        readGrid(sc);
-        System.out.println(findMaxTiltedRectPerimeter());
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                grid[i][j] = sc.nextInt();
+                
+        System.out.println(solve());
     }
-    
-    static void readGrid(Scanner sc) {
+
+    static int solve() {
+        int maxSum = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                grid[i][j] = sc.nextInt();
-            }
-        }
-    }
-    
-    static int findMaxTiltedRectPerimeter() {
-        int maxSum = 0;
-        
-        // 모든 가능한 중심점에서 시도
-        for (int centerX = 0; centerX < n; centerX++) {
-            for (int centerY = 0; centerY < n; centerY++) {
-                maxSum = Math.max(maxSum, findMaxFromCenter(centerX, centerY));
+                maxSum = Math.max(maxSum, findMaxSum(i, j));
             }
         }
         return maxSum;
     }
-    
-    static int findMaxFromCenter(int centerX, int centerY) {
+
+    static int findMaxSum(int x, int y) {
         int maxSum = 0;
-        
-        // 모든 가능한 크기의 기울어진 직사각형 시도
-        for (int k1 = 1; k1 < n; k1++) {        // 세로 방향 반지름
-            for (int k2 = 1; k2 < n; k2++) {    // 가로 방향 반지름
-                int perimeterSum = calculatePerimeter(centerX, centerY, k1, k2);
-                if (perimeterSum > 0) {  // 유효한 테두리가 있는 경우만
-                    maxSum = Math.max(maxSum, perimeterSum);
+        for (int height = 1; height < n; height++) {
+            for (int width = 1; width < n; width++) {
+                // 직사각형을 그릴 수 있는지?
+                if (canDraw(x, y, height, width)) {
+                    maxSum = Math.max(maxSum, drawRect(x, y, height, width));
                 }
             }
         }
         return maxSum;
     }
-    
-    static int calculatePerimeter(int centerX, int centerY, int k1, int k2) {
-        int sum = 0;
-        
-        // 상단 대각선 (↗ 방향)
-        sum += addDiagonalLine(centerX - k1, centerY, k2, 1, 1);
-        
-        // 우측 대각선 (↘ 방향)  
-        sum += addDiagonalLine(centerX, centerY + k2, k1, 1, -1);
-        
-        // 하단 대각선 (↙ 방향)
-        sum += addDiagonalLine(centerX + k1, centerY, k2, -1, -1);
-        
-        // 좌측 대각선 (↖ 방향)
-        sum += addDiagonalLine(centerX, centerY - k2, k1, -1, 1);
-        
-        return sum;
+
+    static boolean canDraw(int lsx, int lsy, int height, int width) {
+        // 왼쪽 시작점에서 왼쪽 끝점으로 내려갔을 때 범위 체크
+        int lex = lsx + height, ley = lsy - height;
+        if (lex >= n || ley < 0) return false;
+        // 왼쪽 끝점에서 오른쪽 끝점으로 내려갈 때 범위 체크
+        int rex = lex + width, rey = ley + width;
+        if (rex >= n || rey >= n) return false;
+        // 오른쪽 끝점에서 오른쪽 시작점으로 올라 갈 때 범위 체크
+        int rsx = rex - height, rsy = rey + height;
+        if (rsx < 0 || rsy >= n) return false;
+        return true;
     }
-    
-    static int addDiagonalLine(int startX, int startY, int length, int dirX, int dirY) {
-        int sum = 0;
+
+    static int drawRect(int lsx, int lsy, int height, int width) {
+        int lex = lsx + height, ley = lsy - height;
+        int rex = lex + width, rey = ley + width;
+        int rsx = rex - height, rsy = rey + height;
         
-        for (int i = 0; i < length; i++) {
-            int x = startX + i * dirX;
-            int y = startY + i * dirY;
-            
-            if (isInBounds(x, y)) {
-                sum += grid[x][y];
-            } else {
-                return 0;  // 경계를 벗어나면 유효하지 않음
-            }
-        }
+        int sum = 0;
+        for (int i = 0; i < height; i++) sum += grid[lsx++][lsy--];
+        for (int i = 0; i < width; i++) sum += grid[lex++][ley++];
+        for (int i = 0; i < height; i++) sum += grid[rex--][rey++];
+        for (int i = 0; i < width; i++) sum += grid[rsx--][rsy--];
         return sum;
-    }
-    
-    static boolean isInBounds(int x, int y) {
-        return x >= 0 && x < n && y >= 0 && y < n;
     }
 }
