@@ -38,24 +38,18 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         char prev = A.charAt(0);
         int count = 1;
-        boolean hasLast = true;
 
         for (int i = 1; i < A.length(); i++) {
             char now = A.charAt(i);
             if (prev == now) {
-                hasLast = true;
                 count++;
             } else {
                 sb.append(prev).append(count);
                 prev = now;
                 count = 1;
-                hasLast = false;
             }
         }
-
-        if (hasLast || count == 1) {
-            sb.append(prev).append(count);
-        }
+        sb.append(prev).append(count);
         return sb.length();
     }
 }
