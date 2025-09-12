@@ -69,15 +69,11 @@ public class Main {
         for (int x : bombs) {
             if (x != 0) count++;
         }
-        if (count == 0) {
-            System.out.println(0);
-            return;
-        };
 
         StringBuilder sb = new StringBuilder();
         sb.append(count).append('\n');
-        for (int x: bombs) {
-            if (x != 0) sb.append(x).append('\n');
+        for (int i = 0; i < count; i++) {
+            sb.append(bombs[i]).append('\n');
         }
         System.out.println(sb.toString());
     }
