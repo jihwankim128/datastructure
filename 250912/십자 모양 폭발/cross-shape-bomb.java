@@ -4,12 +4,14 @@ public class Main {
 
     static int n, r, c;
     static int[][] grid;
+    static int[] temp;
     static int[] dx = {0, 1, 0, -1}, dy = {1, 0, -1, 0};
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         grid = new int[n][n];
+        temp = new int[n];
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
                 grid[i][j] = sc.nextInt();
@@ -28,15 +30,14 @@ public class Main {
     static void applyGravity() {
         // 각 열 별로 아래로 이동
         for (int i = 0; i < n; i++) {
-            int[] gravitied = applyGravity(i);
+            applyGravity(i);
             for (int j = 0; j < n; j++) {
-                grid[j][i] = gravitied[j];
+                grid[j][i] = temp[j];
             }
         }
     }
 
-    static int[] applyGravity(int idx) {
-        int[] temp = new int[n];
+    static void applyGravity(int idx) {
         int next = 0;
         for (int i = 0; i < n; i++) {
             if (grid[i][idx] == 0) {
@@ -49,7 +50,6 @@ public class Main {
                 temp[next++] = grid[i][idx];
             }
         }
-        return temp;
     }
 
     static void boom() {
