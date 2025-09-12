@@ -1,4 +1,5 @@
 // 05:55 시작 ~ 06:29 종료 -> 34분 소요
+// 2차 실행 06:3
 import java.util.*;
 
 public class Main {
@@ -22,19 +23,27 @@ public class Main {
     static void solve() {
         // k번의 작업을 한다. 
         while (k-- > 0) {
-            // 전체 행에서 m개의 연속된 폭탄을 터트린다.
-            bomb();
-            // m개가 터진 후 아래로 모두 떨어진다.
-            drop();
+            // 터트릴게 없을 때까지 반복해야된다.
+            bombLoop();
             // 90도 회전을 한다.
             rotate();
             // 아래로 모두 떨어뜨린다.
             drop();
         }
         // k 번 이후에도 남아있다면 터트린다.
-        bomb();
+        bombLoop();
         // 남은 폭탄의 수를 출력한다.
         print();
+    }
+
+    static void bombLoop() {
+        boolean isBomb = true;
+        while (isBomb) {
+            // 전체 행에서 m개의 연속된 폭탄을 터트린다.
+            isBomb = bomb();
+            // m개가 터진 후 아래로 모두 떨어진다.
+            drop();
+        }
     }
 
     static void debugging() {
@@ -44,6 +53,7 @@ public class Main {
             }
             System.out.println();
         }
+        System.out.println("----------");
     }
 
     static void rotate() {
@@ -75,18 +85,21 @@ public class Main {
         }
     }
 
-    static void bomb() {
+    static boolean bomb() {
+        boolean isBomb = false;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 // m 개 이상의 터트릴게 있다면
                 int same = countSame(i, j);
                 if (same >= m) {
+                    isBomb = true;
                     for (int k = j; k < j + same; k++) {
                         grid[k][i] = 0;
                     }
                 }
             }
         }
+        return isBomb;
     }
 
     static int countSame(int x, int y) {
