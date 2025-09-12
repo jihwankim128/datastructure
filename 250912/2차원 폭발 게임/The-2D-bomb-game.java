@@ -1,0 +1,113 @@
+// 05:55 시작 ~ 06:29 종료 -> 34분 소요
+import java.util.*;
+
+public class Main {
+
+    static int n, m, k;
+    static int[][] grid = new int[101][101];
+    static int[][] rotation = new int[101][101];
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        m = sc.nextInt();
+        k = sc.nextInt();
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                grid[i][j] = sc.nextInt();
+                
+        solve();
+    }
+
+    static void solve() {
+        // k번의 작업을 한다. 
+        while (k-- > 0) {
+            // 전체 행에서 m개의 연속된 폭탄을 터트린다.
+            bomb();
+            // m개가 터진 후 아래로 모두 떨어진다.
+            drop();
+            // 90도 회전을 한다.
+            rotate();
+            // 아래로 모두 떨어뜨린다.
+            drop();
+        }
+        // k 번 이후에도 남아있다면 터트린다.
+        bomb();
+        // 남은 폭탄의 수를 출력한다.
+        print();
+    }
+
+    static void debugging() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(grid[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    static void rotate() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                rotation[j][n - i - 1] = grid[i][j];
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = rotation[i][j];
+            }
+        }
+    }
+
+    static void drop() {
+        for (int i = 0; i < n; i++) {
+            int[] temp = new int[n];
+            int next = 0;
+            for (int j = n - 1; j >= 0; j--) {
+                int value = grid[j][i];
+                if (value > 0) {
+                    temp[next++] = value;
+                }
+            }
+            for (int j = 0; j < n; j++) {
+                grid[n - j - 1][i] = temp[j];
+            }
+        }
+    }
+
+    static void bomb() {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                // m 개 이상의 터트릴게 있다면
+                int same = countSame(i, j);
+                if (same >= m) {
+                    for (int k = j; k < j + same; k++) {
+                        grid[k][i] = 0;
+                    }
+                }
+            }
+        }
+    }
+
+    static int countSame(int x, int y) {
+        if (grid[y][x] == 0) return 0;
+
+        int count = 1;
+        int next = y;
+        while (++next < n) {
+            if (grid[y][x] == grid[next][x]) count++;
+            else break;
+        }
+        return count;
+    }
+
+    static void print() {
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] > 0) count++;
+            }
+        }
+        System.out.println(count);
+    }
+}
