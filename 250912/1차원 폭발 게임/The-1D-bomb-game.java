@@ -34,7 +34,7 @@ public class Main {
     }
 
     static boolean canBomb(int idx) {
-        if (bombs[idx] == 0 || idx + m >= n) {
+        if (bombs[idx] == 0 || idx + m - 1 >= n) {
             return false;
         }
         for (int next = 1; next < m; next++) {
