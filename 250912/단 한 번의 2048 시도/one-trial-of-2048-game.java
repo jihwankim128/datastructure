@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    static int[][] grid = new int[4][4], temp = new int[4][4];
+    static int[][] grid = new int[4][4];
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -60,11 +60,11 @@ public class Main {
             for (int j = 3; j >= 0; j--) {
                 // 현재 위치에서 맨 위에 있는 값을 찾는다.
                 int up = j;
-                while (--up > 0) {
+                while (--up >= 0) {
                     if (grid[up][i] != 0) break;
                 }
                 //현재 숫자와 같은 경우 더한다.
-                if (up > 0 && grid[j][i] == grid[up][i]) {
+                if (up >= 0 && grid[j][i] == grid[up][i]) {
                     grid[j][i] += grid[j][i];
                     grid[up][i] = 0;
                 }
@@ -110,11 +110,11 @@ public class Main {
             for (int j = 3; j >= 0; j--) {
                 // 현재 위치에서 맨 왼쪽에 있는 값을 찾는다.
                 int left = j;
-                while (--left > 0) {
+                while (--left >= 0) {
                     if (grid[i][left] != 0) break;
                 }
                 //현재 숫자와 같은 경우 더한다.
-                if (left > 0 && grid[i][j] == grid[i][left]) {
+                if (left >= 0 && grid[i][j] == grid[i][left]) {
                     grid[i][j] += grid[i][j];
                     grid[i][left] = 0;
                 }
