@@ -7,9 +7,9 @@ public class Main {
 
     static {
         dir['L'] = 0;  // 왼쪽 (기본, 회전 없음)
-        dir['U'] = 1;  // 위쪽 (시계방향 90도)
+        dir['D'] = 1;  // 아래쪽 (시계방향 90도)
         dir['R'] = 2;  // 오른쪽 (시계방향 180도)
-        dir['D'] = 3;  // 아래쪽 (시계방향 270도)
+        dir['U'] = 3;  // 위쪽 (시계방향 270도)
     }
 
     public static void main(String[] args) {
