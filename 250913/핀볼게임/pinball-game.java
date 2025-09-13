@@ -1,4 +1,6 @@
-// pm 17:20 ~ 17:44
+// pm 17:20 ~ 17:44 
+// -> +13분 ~ 17:57
+// 총 37분
 import java.util.*;
 
 public class Main {
@@ -6,6 +8,7 @@ public class Main {
     static int n;
     static int[][] grid = new int[101][101];
     static int[][] dirs = new int[128][4];
+    static int[][] debugCheck = new int[101][101];
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -28,17 +31,31 @@ public class Main {
         // 위 아래 왼쪽 오른쪽 각 방향에서 구슬들을 삽입한다.
         for (int i = 0; i < n; i++) {
             maxSec = Math.max(maxSec, shoot(i, 0, 'R'));
-            maxSec = Math.max(maxSec, shoot(i, 0, 'U'));
             maxSec = Math.max(maxSec, shoot(i, n - 1, 'L'));
-            maxSec = Math.max(maxSec, shoot(i, n - 1, 'D'));
+        }
+        for (int i = 0; i < n; i++) {
+            maxSec = Math.max(maxSec, shoot(n - 1, i, 'U'));
+            maxSec = Math.max(maxSec, shoot(0, i, 'D'));
         }
         System.out.println(maxSec);
+    }
+
+    static void debugging(int count) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(debugCheck[i][j] + " "); 
+            }
+            System.out.println();
+        }
+        System.out.println("---------" + count);
     }
 
     static int shoot(int x, int y, char dir) {
         Queue<int[]> q = new LinkedList<>();
         q.offer(new int[] {x, y});
+        dir = determineNext(dir, x, y);
         int count = 1;
+        debugCheck[x][y] = 2;
 
         while (!q.isEmpty()) {
             int[] poll = q.poll();
@@ -49,8 +66,8 @@ public class Main {
             dir = determineNext(dir, nx, ny);
             q.offer(new int[] {nx, ny});
             count++;
+            debugCheck[nx][ny] = 1;
         }
-
         return count + 1;
     }
 
