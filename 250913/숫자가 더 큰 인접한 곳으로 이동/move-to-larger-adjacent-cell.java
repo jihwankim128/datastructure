@@ -44,7 +44,7 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             int nx = r + dx[i];
             int ny = c + dy[i];
-            if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+            if (nx <= 0 || nx > n || ny <= 0 || ny > n) continue;
             if (grid[nx][ny] > grid[r][c]) {
                 return true;
             }
@@ -57,7 +57,7 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             int nx = r + dx[i];
             int ny = c + dy[i];
-            if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+            if (nx <= 0 || nx > n || ny <= 0 || ny > n) continue;
             // 가장 먼저 큰 값이 발견될 경우, 우선순위 탐색을 마친거 -> 이동
             if (grid[nx][ny] > grid[r][c]) {
                 r = nx;
