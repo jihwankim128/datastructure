@@ -1,4 +1,4 @@
-// 16:11 ~ 17:52 
+// 16:11 ~ 17:12 
 import java.util.*;
 
 public class Main {
@@ -49,7 +49,7 @@ public class Main {
                 }
             }
         }
-
+        
         System.out.println(sec);
     }
 
@@ -71,7 +71,7 @@ public class Main {
         // 벽에 부딪히면 종료
         if (nx < 0 || nx >= n || ny < 0 || ny >= n) return false;
         // 사과가 없으면 꼬리가 줄어든다.
-        if (board[nx][ny] == 0) {
+        if (board[nx][ny] != -1) {
             int[] tail = dq.pollFirst();
             board[tail[0]][tail[1]] = 0; // 꼬리 제거
         }
