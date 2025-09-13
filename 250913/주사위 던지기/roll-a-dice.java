@@ -7,7 +7,6 @@ public class Main {
     static int[] dice = { 1, 2, 3, 4, 5, 6 };
     static int n, m, r, c;
     static String[] directions;
-    static int[][] dir = new int[128][2];
     static int[][] grid = new int[105][105];
 
     public static void main(String[] args) {
@@ -21,11 +20,6 @@ public class Main {
             directions[i] = sc.next();
         }
 
-        dir['R'] = new int[]{0, 1};
-        dir['L'] = new int[]{0, -1};
-        dir['U'] = new int[]{-1, 0};
-        dir['D'] = new int[]{1, 0};
-
         solve();
     }
 
@@ -33,14 +27,8 @@ public class Main {
         grid[r][c] = dice[5];
         // 현재 위치 -> r, c 에서 굴리기 -> String 값에 의해
         for (String direction: directions) {
-            char ch = direction.charAt(0);
-            int nx = r + dir[ch][0];
-            int ny = c + dir[ch][1];
-            if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
-            role(ch);
-            grid[nx][ny] = dice[5];
-            r = nx;
-            c = ny;
+            role(direction.charAt(0));
+            grid[r][c] = dice[5];
         }
         print();
     }
@@ -66,10 +54,30 @@ public class Main {
     }
 
     static void role(char ch) {
-        if (ch == 'R') roleRight();
-        else if(ch == 'L') roleLeft();
-        else if (ch == 'U') roleFront();
-        else roleBack();
+        if (ch == 'R') {
+            int ny = c + 1;
+            if (ny < 0 || ny >= n) return;
+            roleRight();
+            c = ny;
+        }
+        else if(ch == 'L') {
+            int ny = c - 1;
+            if (ny < 0 || ny >= n) return;
+            roleLeft();
+            c = ny;
+        }
+        else if (ch == 'U') {
+            int nx = r - 1;
+            if (nx < 0 || nx >= n) return;
+            roleFront();
+            r = nx;
+        }
+        else {
+            int nx = r + 1;
+            if (nx < 0 || nx >= n) return;
+            roleBack();
+            r = nx;
+        }
     }
 
     // left랑 right는 front, back만 안움직임
