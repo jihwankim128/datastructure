@@ -24,13 +24,13 @@ public class Main {
     static void solve() {
         int blockSize = k + m - 1;
         // 기존 격자판을 모두 탐색
-        for (int i = n - 1; i >= 0; i--) {
+        for (int i = 0; i < n; i++) {
             // 각 행 별로 새로운 블록을 쌓을 수 있는지 확인
             boolean can = canStack(blockSize, i);
-            if (can) {
+            if (!can) {
                 // 쌓을 수 있다면 쌓는다.
                 for (int j = k; j <= k + blockSize; j++) {
-                    grid[i][j] = 1;
+                    grid[i - 1][j] = 1;
                 }
                 break;
             }
