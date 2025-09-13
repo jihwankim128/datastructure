@@ -22,14 +22,13 @@ public class Main {
     }
 
     static void solve() {
-        int blockSize = k + m - 1;
         // 기존 격자판을 모두 탐색
         for (int i = 0; i < n; i++) {
             // 각 행 별로 새로운 블록을 쌓을 수 있는지 확인
-            boolean can = canStack(blockSize, i);
+            boolean can = canStack(i);
             if (!can) {
                 // 쌓을 수 있다면 쌓는다.
-                for (int j = k; j <= k + blockSize; j++) {
+                for (int j = k; j < k + m; j++) {
                     grid[i - 1][j] = 1;
                 }
                 break;
@@ -50,9 +49,9 @@ public class Main {
         System.out.println(sb.toString());
     }
 
-    static boolean canStack(int blockSize, int idx) {
+    static boolean canStack(int idx) {
         // idx 행의 k번째부터 blockSize까지 유효한지
-        for (int i = k; i < k + blockSize; i++) {
+        for (int i = k; i < k + m; i++) {
             if (grid[idx][i] == 1) {
                 return false;
             }
