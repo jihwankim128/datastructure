@@ -22,14 +22,14 @@ public class Main {
     }
 
     static void solve() {
-        int blockSize = k + m;
+        int blockSize = k + m - 1;
         // 기존 격자판을 모두 탐색
         for (int i = n - 1; i >= 0; i--) {
             // 각 행 별로 새로운 블록을 쌓을 수 있는지 확인
             boolean can = canStack(blockSize, i);
             if (can) {
                 // 쌓을 수 있다면 쌓는다.
-                for (int j = k; j < k + blockSize; j++) {
+                for (int j = k; j <= k + blockSize; j++) {
                     grid[i][j] = 1;
                 }
                 break;
@@ -52,7 +52,7 @@ public class Main {
 
     static boolean canStack(int blockSize, int idx) {
         // idx 행의 k번째부터 blockSize까지 유효한지
-        for (int i = k; i < k + blockSize - 1; i++) {
+        for (int i = k; i < k + blockSize; i++) {
             if (grid[idx][i] == 1) {
                 return false;
             }
