@@ -22,7 +22,7 @@ public class Main {
     }
 
     static int[] dx = {-1, 0, 1, 0}, dy = {0, -1, 0, 1};
-    static boolean[][] visited = new boolean[101][101];
+    static boolean[][][] visited = new boolean[101][101][4];
 
     static void debugging() {
         for (int i = 0; i < n; i++) {
@@ -36,7 +36,7 @@ public class Main {
     static void solve() {
         // 시작 방향을 오른쪽으로 한칸 이동한다.
         int dir = 3;
-        visited[x][y] = true;
+        visited[x][y][dir] = true;
         int count = 0;
         
         // 벗어날 때까지 반복한다.
@@ -53,27 +53,19 @@ public class Main {
                 continue;
             }
 
-            if (visited[nx][ny]) {
+            if (visited[nx][ny][dir]) {
                 count = -2;
                 break;
             }
             // 이동하는 방향이 벽이 아니라면 앞으로 이동한다.
-            visited[nx][ny] = true;
+            visited[nx][ny][dir] = true;
             x = nx;
             y = ny;
             count++;
 
             // 앞으로 이동 중 아래에 벽이 없으면 오른쪽 회전 후 벽의 측면을 따라 이동한다.
             int ndir = (dir + 3) % 4;
-            nx = nx + dx[ndir];
-            ny = ny + dy[ndir];
-            if (maze[nx][ny] == '.') {  
-                visited[nx][ny] = true;
-                x = nx;
-                y = ny;
-                dir = ndir;
-                count++;
-            };
+            if (maze[nx][ny] == '.') dir = ndir;
         }
 
         System.out.println(count + 1);
