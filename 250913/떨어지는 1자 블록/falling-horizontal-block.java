@@ -22,16 +22,19 @@ public class Main {
     }
 
     static void solve() {
-        // 기존 격자판을 모두 탐색
-        for (int i = 0; i < n; i++) {
-            // 각 행 별로 새로운 블록을 쌓을 수 있는지 확인
-            boolean can = canStack(i);
-            if (!can) {
-                // 쌓을 수 있다면 쌓는다.
-                for (int j = k; j < k + m; j++) {
-                    grid[i - 1][j] = 1;
+        // 1행짜리 격자판이라면 그냥 처리
+        if (n == 1) {
+            stack(0);
+        } else {
+            // 기존 격자판을 모두 탐색
+            for (int i = 0; i < n; i++) {
+                // 각 행 별로 새로운 블록을 쌓을 수 있는지 확인
+                boolean can = canStack(i);
+                if (!can) {
+                    // 쌓을 수 있다면 쌓는다.
+                    stack(i - 1);
+                    break;
                 }
-                break;
             }
         }
 
@@ -47,6 +50,12 @@ public class Main {
             sb.append('\n');
         }
         System.out.println(sb.toString());
+    }
+
+    static void stack(int idx) {
+        for (int j = k; j < k + m; j++) {
+            grid[idx][j] = 1;
+        }
     }
 
     static boolean canStack(int idx) {
