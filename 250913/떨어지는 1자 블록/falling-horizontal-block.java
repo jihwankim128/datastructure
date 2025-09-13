@@ -1,4 +1,4 @@
-// PM 02:40 ~ 
+// PM 02:40 ~ 03:17
 
 import java.util.Scanner;
 
@@ -22,22 +22,9 @@ public class Main {
     }
 
     static void solve() {
-        // 1행짜리 격자판이라면 그냥 처리
-        if (n == 1) {
-            stack(0);
-        } else {
-            // 기존 격자판을 모두 탐색
-            for (int i = 0; i < n; i++) {
-                // 각 행 별로 새로운 블록을 쌓을 수 있는지 확인
-                boolean can = canStack(i);
-                if (!can) {
-                    // 쌓을 수 있다면 쌓는다.
-                    stack(i - 1);
-                    break;
-                }
-            }
-        }
-
+        // 각 행 별로 새로운 블록을 쌓을 수 있는 행을 찾는다.
+        int idx = findCanIdx();
+        stack(idx);
         print();
     }
 
@@ -58,13 +45,18 @@ public class Main {
         }
     }
 
-    static boolean canStack(int idx) {
-        // idx 행의 k번째부터 blockSize까지 유효한지
-        for (int i = k; i < k + m; i++) {
-            if (grid[idx][i] == 1) {
-                return false;
+    static int findCanIdx() {
+        int idx = 0;
+        for (int i = 0; i < n; i++) {
+            boolean canStack = true;
+            for (int j = k; j < k + m; j++) {
+                if (grid[i][j] == 1) {
+                    canStack = false;
+                }
             }
+            if (!canStack) break;
+            idx = i;
         }
-        return true;
+        return idx;
     }
 }
