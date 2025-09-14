@@ -97,7 +97,7 @@ public class Main {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (moved[i][j] > 1) {
-                    moved[i][j] %= 2;
+                    moved[i][j] = 0;
                 }
             }
         }
