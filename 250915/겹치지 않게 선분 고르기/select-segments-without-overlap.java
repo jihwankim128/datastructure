@@ -1,12 +1,10 @@
-// pm 01:50 ~ 02:16 -> 26m
-
 import java.util.Scanner;
 
 public class Main {
 
     static int n;
     static int[][] segments;
-    static int[] visited = new int[100];
+    static boolean[] used;
     static boolean[] coordinate = new boolean[1001];
     static int maxCnt;
     
@@ -14,57 +12,49 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         segments = new int[n][2];
+        used = new boolean[n];
+        
         for (int i = 0; i < n; i++) {
             segments[i][0] = sc.nextInt();
             segments[i][1] = sc.nextInt();
         }
         
-        solve(0);
+        solve(0, 0);
         System.out.println(maxCnt);
     }
 
-    static void solve(int k) {
+    static void solve(int k, int currentCnt) {
+        // 가지치기: 남은 선분을 모두 선택해도 현재 최댓값을 넘을 수 없다면 종료
+        if (currentCnt + (n - k) <= maxCnt) return;
+        
         if (k == n) {
-            // visited는 기저조건에서
-            // 1, 2, 3 -> 1, 3, 2 -> 2, 1, 3 -> 2, 3, 1 -> 3, 1, 2 -> 3, 2, 1
-            clearCoordinate();
-            int cnt = selectLine();
-            maxCnt = Math.max(cnt, maxCnt);
-            return ;
+            maxCnt = Math.max(currentCnt, maxCnt);
+            return;
         }
 
         for (int i = 0; i < n; i++) {
-            if (visited[k] != 0) continue;
-            visited[k] = i + 1;
-            solve(k + 1);
-            visited[k] = 0;
-        }
-    }
-
-    static void clearCoordinate() {
-        for (int i = 0; i < 1001; i++) {
-            coordinate[i] = false;
-        }
-    }
-
-    static int selectLine() {
-        int cnt = 0;
-        // 1, 2, 3 -> 3, 2, 1 까지의 순열대로 selectLine에 진입하게 됨.
-        for (int i = 0; i < n; i++) {
-            // 1 based idx -> 0 based idx
-            int idx = visited[i] - 1;
-            int p1 = segments[idx][0];
-            int p2 = segments[idx][1];
+            if (used[i]) continue;
             
-            if (canSelect(p1, p2, coordinate)) {
-                select(p1, p2, coordinate);
-                cnt++;
+            int p1 = segments[i][0];
+            int p2 = segments[i][1];
+            
+            used[i] = true;
+            
+            if (canSelect(p1, p2)) {
+                // 선택 가능한 경우
+                select(p1, p2);
+                solve(k + 1, currentCnt + 1);
+                unselect(p1, p2);
+            } else {
+                // 선택 불가능한 경우 (건너뛰기)
+                solve(k + 1, currentCnt);
             }
+            
+            used[i] = false;
         }
-        return cnt;
     }
 
-    static boolean canSelect(int p1, int p2, boolean[] coordinate) {
+    static boolean canSelect(int p1, int p2) {
         for (int pos = p1; pos <= p2; pos++) {
             if (coordinate[pos]) {
                 return false;
@@ -73,16 +63,15 @@ public class Main {
         return true;
     }
 
-    static void select(int p1, int p2, boolean[] coordinate) {
+    static void select(int p1, int p2) {
         for (int pos = p1; pos <= p2; pos++) {
             coordinate[pos] = true;
         }
     }
+    
+    static void unselect(int p1, int p2) {
+        for (int pos = p1; pos <= p2; pos++) {
+            coordinate[pos] = false;
+        }
+    }
 }
-
-/*
-1 2 3 4 5
-    1 1 1
-1 1 
-
-*/
