@@ -7,6 +7,7 @@ public class Main {
     static int n;
     static int[][] segments;
     static int[] visited = new int[100];
+    static boolean[] coordinate = new boolean[1001];
     static int maxCnt;
     
     public static void main(String[] args) {
@@ -26,21 +27,27 @@ public class Main {
         if (k == n) {
             // visited는 기저조건에서
             // 1, 2, 3 -> 1, 3, 2 -> 2, 1, 3 -> 2, 3, 1 -> 3, 1, 2 -> 3, 2, 1
+            clearCoordinate();
             int cnt = selectLine();
             maxCnt = Math.max(cnt, maxCnt);
             return ;
         }
 
         for (int i = 0; i < n; i++) {
-            if (visited[i] != 0) continue;
-            visited[i] = i + 1;
+            if (visited[k] != 0) continue;
+            visited[k] = i + 1;
             solve(k + 1);
-            visited[i] = 0;
+            visited[k] = 0;
+        }
+    }
+
+    static void clearCoordinate() {
+        for (int i = 0; i < 1001; i++) {
+            coordinate[i] = false;
         }
     }
 
     static int selectLine() {
-        boolean[] coordinate = new boolean[1001];
         int cnt = 0;
         // 1, 2, 3 -> 3, 2, 1 까지의 순열대로 selectLine에 진입하게 됨.
         for (int i = 0; i < n; i++) {
