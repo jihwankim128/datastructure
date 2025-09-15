@@ -26,19 +26,23 @@ public class Main {
         solve();
     }
 
+
     static void solve() {
+        // 끝점 기준으로 정렬 (끝점이 같으면 시작점 기준)
         coordinate.sort((p1, p2) -> {
-            if (p1.x == p2.x) return p1.y - p2.y;
-            return p1.x - p2.x;
+            if (p1.y == p2.y) return p1.x - p2.x;
+            return p1.y - p2.y;
         });
         
         Pair prev = coordinate.get(0);
         int cnt = 1;
         for (int i = 1; i < n; i++) {
             Pair now = coordinate.get(i);
-            if (now.x <= prev.y) continue;
-            prev = now;
-            cnt++;
+            // 현재 선분의 시작점이 이전 선분의 끝점보다 뒤에 있어야 함
+            if (now.x > prev.y) {
+                prev = now;
+                cnt++;
+            }
         }
         System.out.println(cnt);
     }
