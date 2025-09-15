@@ -24,6 +24,8 @@ public class Main {
 
     static void solve(int k) {
         if (k == n) {
+            // visited는 기저조건에서
+            // 1, 2, 3 -> 1, 3, 2 -> 2, 1, 3 -> 2, 3, 1 -> 3, 1, 2 -> 3, 2, 1
             int cnt = selectLine();
             maxCnt = Math.max(cnt, maxCnt);
             return ;
@@ -40,22 +42,40 @@ public class Main {
     static int selectLine() {
         boolean[] coordinate = new boolean[1001];
         int cnt = 0;
+        // 1, 2, 3 -> 3, 2, 1 까지의 순열대로 selectLine에 진입하게 됨.
         for (int i = 0; i < n; i++) {
+            // 1 based idx -> 0 based idx
             int idx = visited[i] - 1;
-            int x = segments[idx][0];
-            int y = segments[idx][1];
-
-            boolean canSelect = true;
-            for (int pos = x; pos <= y; pos++) {
-                if (coordinate[pos]) {
-                    canSelect = false;
-                    break;
-                }
-                coordinate[pos] = true;
+            int p1 = segments[idx][0];
+            int p2 = segments[idx][1];
+            
+            if (canSelect(p1, p2, coordinate)) {
+                select(p1, p2, coordinate);
+                cnt++;
             }
-
-            if (canSelect) cnt++;
         }
         return cnt;
     }
+
+    static boolean canSelect(int p1, int p2, boolean[] coordinate) {
+        for (int pos = p1; pos <= p2; pos++) {
+            if (coordinate[pos]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static void select(int p1, int p2, boolean[] coordinate) {
+        for (int pos = p1; pos <= p2; pos++) {
+            coordinate[pos] = true;
+        }
+    }
 }
+
+/*
+1 2 3 4 5
+    1 1 1
+1 1 
+
+*/
