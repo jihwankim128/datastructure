@@ -19,11 +19,10 @@ public class Main {
     }
 
     static void solve(int k, int cnt, int sum) {
-        if (k >= n) return;
-        if (cnt == m) {
-            ans = Math.max(ans, sum);
+        if (k >= n) {
+            if (cnt == m) ans = Math.max(ans, sum);
             return;
-        }
+        };
 
         solve(k + 1, cnt + 1, sum ^ A[k]);
         solve(k + 1, cnt, sum);
