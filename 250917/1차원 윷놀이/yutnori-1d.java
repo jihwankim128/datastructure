@@ -15,16 +15,12 @@ public class Main {
             nums[i] = sc.nextInt();
         }
         
-        solve(0);
+        solve(0, 0);
         System.out.println(maxScore);
     }
 
-    static void solve(int pos) {
+    static void solve(int pos, int score) {
         if (pos >= n) {
-            int score = 0;
-            for (int horse: horses) {
-                if (horse >= m) score++;
-            }
             maxScore = Math.max(maxScore, score);
             return;
         }
@@ -38,7 +34,8 @@ public class Main {
             for (int i = pos; i < n; i++) {
                 int distance = nums[i];
                 horses[horse] += distance;
-                solve(i + 1);
+                if (horses[horse] >= m) solve(i + 1, score + 1);
+                else solve(i + 1, score);
                 horses[horse] -= distance;
             }
         }
