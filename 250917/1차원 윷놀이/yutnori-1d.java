@@ -31,13 +31,10 @@ public class Main {
             if (horses[horse] >= m) continue;
             
             // 현재 거리에 따라 말을 이동
-            for (int i = pos; i < n; i++) {
-                int distance = nums[i];
-                horses[horse] += distance;
-                if (horses[horse] >= m) solve(i + 1, score + 1);
-                else solve(i + 1, score);
-                horses[horse] -= distance;
-            }
+            horses[horse] += nums[pos];
+            if (horses[horse] >= m) solve(pos + 1, score + 1);
+            else solve(pos + 1, score);
+            horses[horse] -= nums[pos];
         }
     }
 }
