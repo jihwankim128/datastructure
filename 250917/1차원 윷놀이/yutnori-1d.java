@@ -25,15 +25,13 @@ public class Main {
             return;
         }
 
-        // 말을 이동해야 됨.
+        // 각 말에게 현재 숫자를 주는 경우
         for (int horse = 0; horse < k; horse++) {
-            // 현재 말이 이미 m 만큼 이동했으면 넘어감
-            if (horses[horse] >= m) continue;
-            
-            // 현재 거리에 따라 말을 이동
+            int newScore = score;
+            if (horses[horse] < m && horses[horse] + nums[pos] >= m) newScore++;
+
             horses[horse] += nums[pos];
-            if (horses[horse] >= m) solve(pos + 1, score + 1);
-            else solve(pos + 1, score);
+            solve(pos + 1, newScore);
             horses[horse] -= nums[pos];
         }
     }
