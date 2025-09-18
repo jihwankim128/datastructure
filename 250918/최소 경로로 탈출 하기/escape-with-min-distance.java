@@ -37,7 +37,7 @@ public class Main {
             for (int i = 0; i < 4; i++) {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
-                if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
+                if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
                 if (a[nx][ny] == 0) continue;
                 a[nx][ny] = 0;
                 q.offer(new int[]{nx, ny, cnt + 1});
