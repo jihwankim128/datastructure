@@ -10,21 +10,22 @@ public class Main {
         n = sc.nextInt();
         matrix = new int[n + 1][n + 1];
         dp = new int[n + 1][n + 1];
-        for (int i = 0; i <= n; i++) Arrays.fill(dp[i], (int) 1e9);
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 matrix[i][j] = sc.nextInt();
             }
         }
         
+        dp[1][1] = matrix[1][1];
         solve();
     }
 
     static void solve() {
         for(int i = 1; i <= n; i++)
-            for(int j = 1; j <= n; j++)
+            for(int j = 1; j <= n; j++) {
+                if(i == 1 && j == 1) continue;
                 dp[i][j] = Math.min(Math.max(dp[i-1][j], dp[i][j-1]), matrix[i][j]);
-        
+            }
         System.out.println(dp[n][n]);
     }
 }
