@@ -17,7 +17,7 @@ public class Main {
     }
 
     static void solve() {
-        int maxNum = 0;
+        int maxNum = 1;
         for (int i = 0; i < n; i++) {
             dp[i] = 1;
             for (int j = 0; j < i; j++) {
