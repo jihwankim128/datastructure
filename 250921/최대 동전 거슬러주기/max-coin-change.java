@@ -17,14 +17,14 @@ public class Main {
     }
 
     static void solve() {
-        Arrays.sort(coin);
-        for (int c: coin) {
-            dp[c] = 1;
-            for (int i = c + c; i <= m; i++) {
-                if (dp[i - c] == 0) continue;
-                dp[i] = Math.max(dp[i], dp[i - c] + 1);
+        for (int c : coin) {
+            for (int i = c; i <= m; i++) {  // c부터 시작
+                if (i == c || dp[i - c] > 0) {  // 첫 동전이거나 만들 수 있는 경우
+                    dp[i] = Math.max(dp[i], dp[i - c] + 1);
+                }
             }
         }
+        
         System.out.println(dp[m] == 0 ? -1 : dp[m]);
     }
 }
