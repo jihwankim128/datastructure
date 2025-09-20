@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 public class Main {
 
     static int n, m;
@@ -9,7 +9,7 @@ public class Main {
         n = sc.nextInt();
         m = sc.nextInt();
         coin = new int[n];
-        dp = new int[m + 1];
+        dp = new int[10001];
         for (int i = 0; i < n; i++) {
             coin[i] = sc.nextInt();
         }
@@ -17,8 +17,11 @@ public class Main {
     }
 
     static void solve() {
+        Arrays.sort(coin);
         for (int c: coin) {
-            for (int i = c; i <= m; i++) {
+            dp[c] = 1;
+            for (int i = c + c; i <= m; i++) {
+                if (dp[i - c] == 0) continue;
                 dp[i] = Math.max(dp[i], dp[i - c] + 1);
             }
         }
