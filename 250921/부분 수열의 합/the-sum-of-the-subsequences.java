@@ -22,6 +22,7 @@ public class Main {
 
     static void solve() {
         for (int num: arr) {
+            if (num > m) continue;
             for (int j = m; j >= num; j--) {
                 if (!dp[j - num]) continue;
                 dp[j] = true;
