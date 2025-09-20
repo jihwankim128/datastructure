@@ -1,4 +1,4 @@
-// PM 01:25 ~ 01:33 -> 8m
+// PM 01:25 ~ 01:37 -> 12m
 import java.util.Scanner;
 public class Main {
 
@@ -17,11 +17,16 @@ public class Main {
     }
 
     static void solve() {
-        dp[0] = 1;
-        for (int i = 1; i < n; i++) {
-            dp[i] = dp[i - 1];
-            if (arr[i - 1] < arr[i]) dp[i]++; 
+        int maxNum = 0;
+        for (int i = 0; i < n; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                    maxNum = Math.max(dp[i], maxNum);
+                }
+            }
         }
-        System.out.println(dp[n - 1]);
+        System.out.println(maxNum);
     }
 }
