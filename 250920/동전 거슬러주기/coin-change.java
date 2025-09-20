@@ -26,6 +26,7 @@ public class Main {
                 dp[i] = Math.min(dp[i], dp[i - coin[j]] + 1);
             }
         }
-        System.out.println(dp[m]);
+    
+        System.out.println((dp[m] == Integer.MAX_VALUE ? -1: dp[m]));
     }
 }
