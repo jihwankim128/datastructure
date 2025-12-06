@@ -3,12 +3,17 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int[] dp = new int[20];
-        dp[1] = 1;
-        dp[2] = 2;
-        for (int i = 3; i <= n; i++) {
-            dp[i] = dp[i - 1] * 2 + 1;
+        
+        long[] catalan = new long[n + 1];
+
+        catalan[0] = 1;
+        catalan[1] = 1;
+
+        for (int i = 2; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                catalan[i] += catalan[j] * catalan[i - 1 - j];
+            }
         }
-        System.out.println(dp[n]);
+        System.out.println(catalan[n]);
     }
 }
