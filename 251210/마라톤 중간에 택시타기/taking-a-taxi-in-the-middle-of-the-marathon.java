@@ -29,7 +29,7 @@ public class Main {
             int nx = xl[i-1] + xr[i+1] + Math.abs(x[i-1] - x[i+1]);
             int ny = yl[i-1] + yr[i+1] + Math.abs(y[i-1] - y[i+1]);
 
-             ans = Math.min(min, nx + ny);
+             ans = Math.min(ans, nx + ny);
         }
         System.out.println(ans);
     }
