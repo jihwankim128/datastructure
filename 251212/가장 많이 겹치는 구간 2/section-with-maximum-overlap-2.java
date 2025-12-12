@@ -40,8 +40,8 @@ public class Main {
         int ans = 0;
         int sum = 0;
         for (Point p: points) {
+            if (sum + p.v == cnt) ans++;
             sum += p.v;
-            if (sum == cnt) ans++;
         }
         return ans;
     } 
