@@ -21,9 +21,7 @@ public class Main {
             points.add(new Point(x2, -1));
         }
         
-        points.sort((p1, p2) -> p1.x - p2.x);
-        int cnt = getMaxCnt();
-        System.out.println(solve(cnt));
+        System.out.println(getMaxCnt());
     }
 
     static int getMaxCnt() {
@@ -35,14 +33,4 @@ public class Main {
         }
         return maxCnt;
     }
-
-    static int solve(int cnt) {
-        int ans = 0;
-        int sum = 0;
-        for (Point p: points) {
-            if (sum + p.v == cnt) ans++;
-            sum += p.v;
-        }
-        return ans;
-    } 
 }
