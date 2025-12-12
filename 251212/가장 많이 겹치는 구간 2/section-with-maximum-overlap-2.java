@@ -20,6 +20,7 @@ public class Main {
             points.add(new Point(x1, 1));
             points.add(new Point(x2, -1));
         }
+        points.sort((p1, p2) -> p1.x - p2.x);
         
         System.out.println(getMaxCnt());
     }
