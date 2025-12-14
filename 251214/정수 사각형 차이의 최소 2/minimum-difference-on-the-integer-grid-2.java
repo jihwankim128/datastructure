@@ -1,52 +1,61 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-
-    static int n;
-    static int[][] grid;
-    static int[][][] dp;
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        grid = new int[n][n];
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                grid[i][j] = sc.nextInt();
-                
-        dp = new int[n][n][2];
-        dp[0][0][0] = dp[0][0][1] = grid[0][0];
-        for (int i = 1; i < n; i++) {
-            int prev = i - 1;
-            // 첫번째 행 채우기
-            dp[0][i][0] = Math.min(dp[0][prev][0], grid[0][i]);
-            dp[0][i][1] = Math.max(dp[0][prev][1], grid[0][i]);
-            // 첫번째 열 채우기
-            dp[i][0][0] = Math.min(dp[prev][0][0], grid[i][0]);
-            dp[i][0][1] = Math.max(dp[prev][0][1], grid[i][0]);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        int[][] grid = new int[n][n];
+        
+        for (int i = 0; i < n; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = Integer.parseInt(st.nextToken());
+            }
         }
-
-        solve();
-    }
-
-    static void solve() {
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < n; j++) {
-                int leftMinV = dp[i][j - 1][0];
-                int leftMaxV = dp[i][j - 1][1];
-                int upMinV = dp[i - 1][j][0];
-                int upMaxV = dp[i - 1][j][1];
-
-                if (upMaxV - upMinV < leftMaxV - leftMinV) {
-                    dp[i][j][0] = Math.min(grid[i][j], upMinV);
-                    dp[i][j][1] = Math.max(grid[i][j], upMaxV);
-                } else {
-                    dp[i][j][0] = Math.min(grid[i][j], leftMinV);
-                    dp[i][j][1] = Math.max(grid[i][j], leftMaxV);
+        
+        // dp[i][j][k] = (i,j)에 최솟값 k로 도달했을 때의 최댓값
+        // 값 범위: 0~100
+        int[][][] dp = new int[n][n][101];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                Arrays.fill(dp[i][j], 101);  // 불가능한 큰 값
+            }
+        }
+        
+        dp[0][0][grid[0][0]] = grid[0][0];
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int minVal = 0; minVal <= 100; minVal++) {
+                    if (dp[i][j][minVal] == 101) continue;  // 도달 불가능
+                    
+                    int maxVal = dp[i][j][minVal];
+                    
+                    // 오른쪽
+                    if (j + 1 < n) {
+                        int newMin = Math.min(minVal, grid[i][j+1]);
+                        int newMax = Math.max(maxVal, grid[i][j+1]);
+                        dp[i][j+1][newMin] = Math.min(dp[i][j+1][newMin], newMax);
+                    }
+                    
+                    // 아래
+                    if (i + 1 < n) {
+                        int newMin = Math.min(minVal, grid[i+1][j]);
+                        int newMax = Math.max(maxVal, grid[i+1][j]);
+                        dp[i+1][j][newMin] = Math.min(dp[i+1][j][newMin], newMax);
+                    }
                 }
             }
         }
-        int[] result = dp[n - 1][n - 1];
-        System.out.println(result[1] - result[0]);
+        
+        int ans = Integer.MAX_VALUE;
+        for (int minVal = 0; minVal <= 100; minVal++) {
+            if (dp[n-1][n-1][minVal] != 101) {
+                ans = Math.min(ans, dp[n-1][n-1][minVal] - minVal);
+            }
+        }
+        
+        System.out.println(ans);
     }
 }
