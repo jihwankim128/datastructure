@@ -15,7 +15,7 @@ public class Main {
                 if(num==10){
                     num=1;
                 }
-                System.out.print(String.valueOf(num)+" ");
+                System.out.print(num + " ");
                 num+=1;
             }
             System.out.println();
