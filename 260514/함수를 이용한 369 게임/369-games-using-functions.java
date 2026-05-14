@@ -8,7 +8,6 @@ public class Main {
         System.out.println(func(A,B));
     }
 
-// 4 ~ 20 -> 6,9,13,16,19
     public static int func(int a, int b){
         int sum = 0;
 
