@@ -5,26 +5,26 @@ public class Main {
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        Integer[] arr = new Integer[n];
+        List<Integer> arr = new ArrayList<>();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        for(int i =0; i<n; i++){
-            arr[i] = Integer.parseInt(st.nextToken());
+        for(int i =0; i<n; i++){ 
+            arr.add(Integer.parseInt(st.nextToken()));
         }
 
-        Arrays.sort(arr);
+        arr.sort((a,b)->a-b);
 
         for(int i=0;i<n;i++){
-            System.out.print(arr[i] + " ");
+            System.out.print(arr.get(i) + " ");
         }
 
         System.out.println();
 
-        Arrays.sort(arr,Collections.reverseOrder());
+        arr.sort((a,b)->b-a);
         
         for(int i=0;i<n;i++){
-            System.out.print(arr[i] + " ");
+            System.out.print(arr.get(i) + " ");
         }
         
     }
