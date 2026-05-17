@@ -9,20 +9,13 @@ public class Main {
     }
 
     public static int rec(int n){
-        if(n%2==0){
-            if(n==2){
-                return 2;
-            }
-
-            return rec(n-2) + n;
+        if(n==1){
+            return 1;
+        }        
+        if(n==2){
+            return 2;
         }
-        else{
-            if(n==1){
-                return 1;
-            }
-
-            return rec(n-2) + n;
-
-        }
+        
+        return rec(n-2) + n;
     }
 }
