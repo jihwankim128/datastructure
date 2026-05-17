@@ -1,23 +1,23 @@
 import java.util.Scanner;
 public class Main {
+
+    public static int MAX_N = 100;
+    public static int[] arr = new int[MAX_N];    
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int[] arr = new int[n];
-        for (int i = 0; i < n; i++) {
+        for(int i = 0; i < n; i++){
             arr[i] = sc.nextInt();
         }
-        System.out.println(rec(arr,n-1,arr[n-1]));
+        System.out.println(rec(n));
+        
     }
 
-    public static int rec(int[] arr, int n, int maxValue){
-        
+    public static int rec(int n){
         if(n==0){
-            return Math.max(arr[0],maxValue);
+            return arr[0];
         }
-        else{
-            int maxVal = Math.max(maxValue,arr[n-1]);
-            return rec(arr,n-1,maxVal);
-        }
+        return Math.max(rec(n-1),arr[n]);
     }
 }
