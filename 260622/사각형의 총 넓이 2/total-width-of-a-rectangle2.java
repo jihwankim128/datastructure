@@ -15,9 +15,7 @@ public class Main {
             
             for(int j=x1; j<x2; j++){
                 for(int k=y1; k<y2; k++){
-                    if(arr[j][k]!=1){
-                        arr[j][k]+=1;
-                    }
+                    arr[j][k]+=1;
                 }
             }
         }
@@ -25,7 +23,7 @@ public class Main {
         int res = 0;
         for(int i=0;i<200;i++){
             for(int j=0;j<200;j++){
-                if(arr[i][j]==1){
+                if(arr[i][j]>0){
                     res+=1;
                 }
             }
