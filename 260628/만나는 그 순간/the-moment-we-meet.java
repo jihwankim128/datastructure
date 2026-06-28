@@ -7,55 +7,38 @@ public class Main {
         int m = sc.nextInt();
         int[] arrA = new int[2000000];
         int[] arrB = new int[2000000];
-        int offset = 1000000;
-        int positionA = 0;
-        int positionB = 0;
-        int indexA = 0;
-        int indexB = 0;
+
+        int indexA = 1;
+        int indexB = 1;
 
         for(int i=0; i<n; i++){
             char dir = sc.next().charAt(0); //이거 맞는지 체크
             int t = sc.nextInt();
-            if(dir=='R'){
-                for(int j=0; j<=t; j++){
-                    arrA[indexA] = positionA + offset;
-                    positionA++;
-                    indexA++;
+            for(int j=0; j<t; j++){
+                if(dir=='R'){
+                    arrA[indexA] = arrA[indexA-1] +1;
                 }
-                positionA--;
-                indexA--;
-            }
-            else{
-                for(int j=0; j<=t; j++){
-                    arrA[indexA] = positionA + offset; 
-                    positionA--;
-                    indexA++;
+                else{
+                    arrA[indexA] = arrA[indexA-1] -1;
                 }
-                positionA++;
-                indexA--;
+                indexA++;
             }
+
+
         }
 
         for(int i=0; i<m; i++){
             char dir = sc.next().charAt(0);
             int t = sc.nextInt();
-            if(dir=='R'){
-                for(int j=0; j<=t; j++){
-                    arrB[indexB] = positionB + offset;
-                    positionB++;
-                    indexB++;
+
+            for(int j=0;j<t; j++){
+                if(dir=='R'){
+                    arrB[indexB] = arrB[indexB-1]+1;
+                }  
+                else{
+                    arrB[indexB] = arrB[indexB-1]-1;
                 }
-                positionB--;
-                indexB--;
-            }
-            else{  
-                for(int j=0; j<=t; j++){
-                    arrB[indexB] = positionB + offset;
-                    positionB--;
-                    indexB++;
-                }
-                positionB++;
-                indexB--;
+                indexB++;
             }
         }
 
