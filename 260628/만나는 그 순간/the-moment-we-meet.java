@@ -42,15 +42,11 @@ public class Main {
             }
         }
 
-        int ans = 0;
-        for(int i=0;i<2000000;i++){
-            if(i>=1 && arrA[i]==arrB[i] && arrA[i]!=0){
+        int ans = -1;
+        for(int i=1; i<indexA; i++){
+            if(arrA[i]==arrB[i]){
                 ans=i;
                 break;
-            
-            }
-            else{
-                ans=-1;
             }
         }
         System.out.println(ans);
