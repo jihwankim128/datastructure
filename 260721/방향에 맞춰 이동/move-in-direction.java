@@ -14,24 +14,24 @@ public class Main {
         for(int i=0; i<n; i++){
             char direction = sc.next().charAt(0);
             int distance = sc.nextInt();
-            
+
+            int dir;
+            if(direction=='E'){
+                dir=0;
+            }
+            else if(direction=='S'){
+                dir=1;
+            }
+            else if(direction=='W'){
+                dir=2;
+            }
+            else{
+                dir=3;
+            }
+
             for(int j=0; j<distance; j++){
-                if(direction=='E'){
-                    x += dx[0];
-                    y += dy[0];
-                }
-                else if(direction=='S'){
-                    x += dx[1];
-                    y += dy[1];
-                }
-                else if(direction=='W'){
-                    x += dx[2];
-                    y += dy[2];
-                }
-                else if(direction=='N'){
-                    x += dx[3];
-                    y += dy[3];
-                }
+                x = x + dx[dir];
+                y = y + dy[dir];
             }
         }
         
